@@ -1,0 +1,53 @@
+wget https://www2.census.gov/programs-surveys/popest/datasets/2020-2021/state/asthma/popest_data_file.csv
+
+head -n 10 popest_data_file.csv
+
+hadoop fs -mkdir /user/hadoop/popest_data
+
+hadoop fs -put popest_data_file.csv /user/hadoop/popest_data/
+
+hive
+
+CREATE DATABASE popest_db;
+USE popest_db;
+
+CREATE TABLE popest_data (
+  column1 STRING,
+  column2 INT,
+  column3 FLOAT,
+  ...
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+LOAD DATA INPATH '/user/hadoop/popest_data/popest_data_file.csv' INTO TABLE popest_data;
+
+SELECT * FROM popest_data LIMIT 10;
+
+crontab -e
+
+0 0 * * * /path/to/your/script.sh
+
+
+#!/bin/bash
+
+# Variables
+DATA_URL="https://www2.census.gov/programs-surveys/popest/datasets/2020-2021/state/asthma/popest_data_file.csv"
+HDFS_DIR="/user/hadoop/popest_data"
+LOCAL_FILE="popest_data_file.csv"
+
+# Download data
+wget $DATA_URL -O $LOCAL_FILE
+
+# Upload to HDFS
+hadoop fs -mkdir -p $HDFS_DIR
+hadoop fs -put $LOCAL_FILE $HDFS_DIR/
+
+# Load data into Hive (assumes Hive is configured)
+hive -e "
+  USE popest_db;
+  LOAD DATA INPATH '$HDFS_DIR/$LOCAL_FILE' INTO TABLE popest_data;
+"
+
+
