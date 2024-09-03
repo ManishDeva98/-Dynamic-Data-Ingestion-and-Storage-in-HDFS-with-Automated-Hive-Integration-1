@@ -1,0 +1,128 @@
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+coder@7d06f15e0f7e:~/project$ wget https://downloads.apache.org/hive/hive-4.0.0/apache-hive-4.0.0-bin.tar.gz
+--2024-09-03 18:47:04--  https://downloads.apache.org/hive/hive-4.0.0/apache-hive-4.0.0-bin.tar.gz
+Resolving downloads.apache.org (downloads.apache.org)... 88.99.208.237, 135.181.214.104, 2a01:4f9:3a:2c57::2, ...
+Connecting to downloads.apache.org (downloads.apache.org)|88.99.208.237|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 458782861 (438M) [application/x-gzip]
+Saving to: 'apache-hive-4.0.0-bin.tar.gz.2'
+
+apache-hive-4.0.0-bin.tar.gz.2                    100%[============================================================================================================>] 437.53M  96.3MB/s    in 4.8s    
+
+2024-09-03 18:47:09 (91.0 MB/s) - 'apache-hive-4.0.0-bin.tar.gz.2' saved [458782861/458782861]
+
+coder@7d06f15e0f7e:~/project$ wget https://downloads.apache.org/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar.gz
+--2024-09-03 18:47:21--  https://downloads.apache.org/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar.gz
+Resolving downloads.apache.org (downloads.apache.org)... 135.181.214.104, 88.99.208.237, 2a01:4f8:10a:39da::2, ...
+Connecting to downloads.apache.org (downloads.apache.org)|135.181.214.104|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 965537117 (921M) [application/x-gzip]
+Saving to: 'hadoop-3.4.0.tar.gz.3'
+
+hadoop-3.4.0.tar.gz.3                             100%[============================================================================================================>] 920.81M   109MB/s    in 8.9s    
+
+2024-09-03 18:47:30 (103 MB/s) - 'hadoop-3.4.0.tar.gz.3' saved [965537117/965537117]
+
+coder@7d06f15e0f7e:~/project$ https://www2.census.gov/programs-surveys/popest/datasets/2020-2023/cities/totals/sub-est2023_50.csv
+bash: https://www2.census.gov/programs-surveys/popest/datasets/2020-2023/cities/totals/sub-est2023_50.csv: No such file or directory
+coder@7d06f15e0f7e:~/project$ wget https://www2.census.gov/programs-surveys/popest/datasets/2020-2023/cities/totals/sub-est2023_32.csv
+--2024-09-03 18:50:23--  https://www2.census.gov/programs-surveys/popest/datasets/2020-2023/cities/totals/sub-est2023_32.csv
+Resolving www2.census.gov (www2.census.gov)... 23.50.68.126, 2600:1401:2000:2b4::208c, 2600:1401:2000:2a7::208c
+Connecting to www2.census.gov (www2.census.gov)|23.50.68.126|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5705 (5.6K) [text/csv]
+Saving to: 'sub-est2023_32.csv.7'
+
+sub-est2023_32.csv.7                              100%[============================================================================================================>]   5.57K  --.-KB/s    in 0s      
+
+2024-09-03 18:50:24 (1.44 GB/s) - 'sub-est2023_32.csv.7' saved [5705/5705]
+
+coder@7d06f15e0f7e:~/project$ wget https://www2.census.gov/programs-surveys/popest/datasets/2020-2023/cities/totals/sub-est2023_50.csv
+--2024-09-03 18:50:37--  https://www2.census.gov/programs-surveys/popest/datasets/2020-2023/cities/totals/sub-est2023_50.csv
+Resolving www2.census.gov (www2.census.gov)... 23.50.68.126, 2600:1401:2000:2a7::208c, 2600:1401:2000:2b4::208c
+Connecting to www2.census.gov (www2.census.gov)|23.50.68.126|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 35173 (34K) [text/csv]
+Saving to: 'sub-est2023_50.csv'
+
+sub-est2023_50.csv                                100%[============================================================================================================>]  34.35K  --.-KB/s    in 0.1s    
+
+2024-09-03 18:50:38 (334 KB/s) - 'sub-est2023_50.csv' saved [35173/35173]
+
+coder@7d06f15e0f7e:~/project$ hadoop fs -ls /user
+24/09/03 18:51:05 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 3 items
+drwxr-xr-x   - coder supergroup          0 2024-09-03 18:12 /user/hive
+drwxr-xr-x   - coder supergroup          0 2024-09-03 18:41 /user/hive-project
+drwxr-xr-x   - coder supergroup          0 2024-09-03 18:45 /user/manish-demo
+coder@7d06f15e0f7e:~/project$ hadoop fs -mkdir /user/project3
+24/09/03 18:51:47 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+coder@7d06f15e0f7e:~/project$ hadoop fs -put sub-est2023_50.csv /user/project3/
+24/09/03 18:52:21 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+coder@7d06f15e0f7e:~/project$ hadoop fs -ls /user/project3/
+24/09/03 18:53:02 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 1 items
+-rw-r--r--   1 coder supergroup      35173 2024-09-03 18:52 /user/project3/sub-est2023_50.csv
+coder@7d06f15e0f7e:~/project$ hive
+
+Logging initialized using configuration in jar:file:/opt/hive/lib/hive-common-2.3.5.jar!/hive-log4j2.properties Async: true
+Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+hive> show databases;
+OK
+default
+manish
+Time taken: 5.414 seconds, Fetched: 2 row(s)
+hive> use manish;
+OK
+Time taken: 0.027 seconds
+hive> DROP TABLE IF EXISTS project;
+OK
+Time taken: 0.058 seconds
+hive> CREATE TABLE project (
+    >     SUMLEV INT,
+    >     STATE INT,
+    >     COUNTY INT,
+    >     PLACE INT,
+    >     COUSUB INT,
+    >     CONCIT INT,
+    >     PRIMGEO_FLAG INT,
+    >     FUNCSTAT STRING,
+    >     NAME STRING,
+    >     STNAME STRING,
+    >     ESTIMATESBASE2020 INT,
+    >     POPESTIMATE2020 INT,
+    >     POPESTIMATE2021 INT,
+    >     POPESTIMATE2022 INT,
+    >     POPESTIMATE2023 INT,
+    >     PRIMARY KEY (STATE, COUNTY, PLACE, NAME) DISABLE NOVALIDATE
+    > )
+    > ROW FORMAT DELIMITED
+    > FIELDS TERMINATED BY ','
+    > STORED AS TEXTFILE;
+OK
+Time taken: 0.788 seconds
+hive> LOAD DATA INPATH '/user/project3/sub-est2023_50.csv' INTO TABLE project;
+Loading data to table manish.project
+OK
+Time taken: 0.95 seconds
+hive> select * from project limit 15;
+OK
+NULL    NULL    NULL    NULL    NULL    NULL    NULL    FUNCSTAT        NAME    STNAME  NULL    NULL    NULL    NULL    NULL
+40      50      0       0       0       0       0       A       Vermont Vermont 643077  642936  647093  647110  647464
+162     50      0       400     0       0       0       A       Albany village  Vermont 182     181     181     181     178
+162     50      0       850     0       0       0       A       Alburgh village Vermont 595     593     607     611     609
+162     50      0       3175    0       0       0       A       Barre city      Vermont 8489    8476    8476    8438    8387
+162     50      0       3475    0       0       0       A       Barton village  Vermont 752     750     746     736     726
+162     50      0       4225    0       0       0       A       Bellows Falls village   Vermont 2788    2789    2799    2773    2769
+162     50      0       10675   0       0       0       A       Burlington city Vermont 44742   44746   44744   44612   44528
+162     50      0       11425   0       0       0       A       Cambridge village       Vermont 203     202     204     200     197
+162     50      0       17425   0       0       0       A       Derby Center village    Vermont 649     647     647     640     634
+162     50      0       17500   0       0       0       A       Derby Line village      Vermont 680     680     679     672     666
+162     50      0       24025   0       0       0       A       Enosburg Falls village  Vermont 1352    1353    1351    1349    1345
+162     50      0       24400   0       0       0       A       Essex Junction city     Vermont 10602   10585   10800   10917   10817
+162     50      0       34975   0       0       0       A       Hyde Park village       Vermont 431     430     430     433     425
+162     50      0       36025   0       0       0       A       Jacksonville village    Vermont 215     215     215     217     218
+Time taken: 1.202 seconds, Fetched: 15 row(s)
+hive> 
